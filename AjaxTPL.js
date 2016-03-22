@@ -40,16 +40,24 @@ Ajax.prototype = {
          * @param Object oConf: 配置项
          * -------------------------------------------------------------------------
         */
-        fInitConf: function ( oOrginConf, oTargetConf ) {
-                if ( typeof( oOrginConf ) !== 'object' ) {
-                        return typeof ( oTargetConf ) !== 'undefined'? oTargetConf: oOrginConf;
-                }         
-                for ( var index in oOrginConf ) {
-                                oTargetConf[ index ] =  typeof( oOrginConf ) !== 'object' && typeof( oTargetConf[ index ] ) != 'undefined'
-                                        ? oOrginConf[index]
-                                        : this.fInitConf( oOrginConf[ index ], oTargetConf[ index ] );
-                }
-                return oTargetConf;
+        fInitConf: function( oOrginConf, oTargetConf ) {
+    		if ( typeof( oOrginConf ) !== 'object' ) {
+                    return typeof ( oTargetConf ) !== 'undefined'? oTargetConf: oOrginConf;
+            }         
+    		else {
+    		        oTargetConf = oTargetConf || {};	
+    		}
+    		
+            for ( var index in oOrginConf ) {
+            	
+            	    if ( typeof( oOrginConf[ index ] ) !== 'object' ) {
+            	    	    oTargetConf[ index ] = typeof( oTargetConf[ index ] ) != 'undefined'? oTargetConf[ index ]: oOrginConf[ index ];     
+            	    }
+            	    else {
+            	        	oTargetConf[ index ] = this.fInitConf( oOrginConf[ index ], oTargetConf[ index ] );
+            	    }
+            }
+            return oTargetConf;
         },
         
         /**
